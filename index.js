@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
-const {Triangle,Circle,Square} = require("./utils/generateSVG");
-
+//const {Triangle,Circle,Square} = require("./utils/generateSVG");
+const chooseShape = require("./utils/chooseShape.js")
 const fs = require('fs/promises');
 const path = require('path');
 
@@ -23,7 +23,22 @@ const questions = [
         type: "input",
         name: "name",
         message: "Name",
-        validate: (value) => { if (value.length <= 3) { return true } else { return 'must be no more than 3 characters long' } }
+        validate (value) {
+            console.log(value);
+            return new Promise((resolve, reject) => {
+                
+                if (value.length >= 3) {
+    
+                    console.log(value);
+                    resolve (true);
+                } else {
+                    console.log(value);
+                    reject (new Error ('must be no more than 3 characters long'));
+                }
+            })
+
+            
+        }
     },
     {
         type: "input",
@@ -37,22 +52,36 @@ const questions = [
         message: "Shape color",
         validate: (value) => { if (value) { return true } else { return 'You must enter a shape color' } }
     }
-   
+
 ];
 
 
 
-function writeToFile(fileName, response) {
-    return fs.writeFileSync(path.join(__dirname, fileName), response);
-   
- }
- 
-
-async function init() {
-    const response = await inquirer.prompt(questions);
-        //const svgText = generateSVG(answers);
-        
-        writeToFile('logo.svg', response);
+function writeToFile(fileName, content) {
+    fs.writeFile(path.join(__dirname, fileName), content)
+        .then((result) => {
+            console.log("write file", result);
+        })
 }
+
+//  function generateLogo(response) {
+//     }
+
+
+
+
+function init() {
+    inquirer
+        .prompt(questions)
+        .then((response) => {
+            console.log("response", response);
+            const svg = chooseShape(response);
+            writeToFile("logo.svg", svg);
+        })
+        .catch(err => {
+            console.log(err)
+        });
+}
+
 
 init();

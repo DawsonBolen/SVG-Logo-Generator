@@ -1,4 +1,4 @@
-
+const {Triangle, Circle, Square} = require("./generateSVG");
 
 
 function chooseShape(response) {
@@ -16,3 +16,5 @@ function chooseShape(response) {
         return "error";
     }
 }
+
+module.exports = chooseShape;

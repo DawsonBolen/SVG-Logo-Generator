@@ -1,5 +1,5 @@
 class Shapes {
-    constructor(shapecolor, textcolor, name) {
+    constructor(shapecolor, name, textcolor) {
       this.shapecolor = shapecolor;
       this.textcolor = textcolor;
       this.name = name;
