@@ -4,12 +4,7 @@ const chooseShape = require("./utils/chooseShape.js")
 const fs = require('fs/promises');
 const path = require('path');
 
-// function writeSVGFile(filename = "logo", content = {}) {
-//     console.log('writing to file', content, filename);
-//     fs.writeFile(`${__dirname}/dist/${filename}.svg`, content).then(() => {
-//         console.log('done');
-//     })
-// }
+
 
 const questions = [
     {
@@ -23,21 +18,21 @@ const questions = [
         type: "input",
         name: "name",
         message: "Name",
-        validate (value) {
+        validate(value) {
             console.log(value);
             return new Promise((resolve, reject) => {
-                
+
                 if (value.length >= 3) {
-    
-                    console.log(value);
-                    resolve (true);
+
+                    //console.log(value);
+                    resolve(true);
                 } else {
-                    console.log(value);
-                    reject (new Error ('must be no more than 3 characters long'));
+                    //console.log(value);
+                    reject(new Error('must be no more than 3 characters long'));
                 }
             })
 
-            
+
         }
     },
     {
@@ -64,17 +59,13 @@ function writeToFile(fileName, content) {
         })
 }
 
-//  function generateLogo(response) {
-//     }
-
-
 
 
 function init() {
     inquirer
         .prompt(questions)
         .then((response) => {
-            console.log("response", response);
+            //console.log("response", response);
             const svg = chooseShape(response);
             writeToFile("logo.svg", svg);
         })
